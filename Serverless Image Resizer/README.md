@@ -1,70 +1,90 @@
-🚀 Serverless Image Resizer (S3 + Lambda) – 
+# 🚀 Serverless Image Resizer (Amazon S3 + AWS Lambda)
 
-📌 Project Overview
+## 📌 Project Overview
 
-This project builds a serverless image resizing pipeline using Amazon Web Services where images uploaded to S3 are automatically resized using AWS Lambda and stored back in the same bucket.
+This project implements a **serverless image processing pipeline** using **Amazon S3** and **AWS Lambda**.  
 
-🎯 Objective
-Automate image resizing on upload
-Use event-driven architecture
-Avoid server management
-Build a scalable cloud solution
+Whenever a user uploads an image into an S3 bucket, an event automatically triggers a Lambda function that resizes the image and stores the processed version back into the same bucket (or another output folder).
 
-⚙️ Step-by-Step Implementation
-🧱 Step 1: Create S3 Bucket
-Go to AWS Console → S3
-Click Create Bucket
-Provide a unique bucket name
-Keep default settings and create
-🧱 Step 2: Create IAM Role for Lambda
-Go to IAM → Roles → Create Role
-Select AWS Service → Lambda
-Attach policies:
-AmazonS3FullAccess (for learning/demo)
-AWSLambdaBasicExecutionRole
-Create role
-🧱 Step 3: Create Lambda Function
-Go to Lambda → Create Function
-Choose Author from scratch
-Select runtime: Python 3.x
-Attach the IAM role created earlier
-🧱 Step 4: Prepare Deployment Package
-Open AWS CloudShell (recommended)
-Create a working directory
-Install required image processing library (Pillow)
-Add your Lambda function file
-Compress everything into a ZIP file
-🧱 Step 5: Upload Code to Lambda
-Go to Lambda → Code section
-Upload the ZIP file
-Set correct handler name
-Click Deploy
-🧱 Step 6: Configure S3 Trigger
-Go to S3 bucket → Properties
-Scroll to Event Notifications
-Create new event:
-Event type: PUT (Object Created)
-Destination: Lambda function
-Save configuration
-🧱 Step 7: Configure Permissions (If Needed)
-Ensure Lambda role has permission to:
-Read objects from S3
-Write objects to S3
-🧪 Step 8: Test the System
-Upload an image file to S3 bucket
-Wait for Lambda to trigger automatically
-Check the same bucket for resized image
-📊 Expected Result
-Original image remains unchanged
-New resized image is created with modified filename
-⚠️ Common Issues
-Lambda not triggering → Check S3 event configuration
-Import errors → Dependency not packaged correctly
-Access denied → IAM role missing permissions
-Infinite loop → Output file triggering Lambda again
-🧠 Key Concepts Learned
-Serverless architecture
-Event-driven processing
-AWS Lambda execution flow
-S3 event notifications
-Cloud-based image processing
+This solution is scalable, cost-effective, and requires **no server management**.
+
+---
+
+## 🎯 Objective
+
+- Automatically resize images after upload
+- Use event-driven cloud architecture
+- Eliminate infrastructure management
+- Build a scalable media processing workflow
+- Reduce manual image optimization tasks
+
+---
+
+## 🧰 AWS Services Used
+
+- **Amazon S3** – Stores original and resized images
+- **AWS Lambda** – Processes and resizes uploaded images
+- **IAM** – Manages permissions for Lambda
+- **CloudWatch Logs** – Monitors execution logs
+- **AWS CloudShell** – Used to package dependencies
+
+---
+
+## 🏗️ Architecture
+
+```text
+User Uploads Image
+        ↓
+Amazon S3 Bucket
+        ↓
+S3 PUT Event Trigger
+        ↓
+AWS Lambda Function
+        ↓
+Resize Image using Pillow
+        ↓
+Save Resized Image to S3
+
+## ⚙️ Implementation Steps
+
+### Step 1: Create S3 Bucket
+- Open AWS Console → S3  
+- Create a new bucket with a unique name  
+- Keep default settings  
+
+### Step 2: Create IAM Role
+- Go to IAM → Roles  
+- Create role for Lambda  
+- Attach permissions:
+  - AmazonS3FullAccess  
+  - AWSLambdaBasicExecutionRole  
+
+### Step 3: Create Lambda Function
+- Open AWS Lambda  
+- Create new function  
+- Choose Python runtime  
+- Attach IAM role  
+
+### Step 4: Add Lambda Code
+- Upload deployment package with Pillow library  
+- Add Python code for image resizing  
+- Deploy function  
+
+### Step 5: Configure S3 Trigger
+- Open S3 bucket → Properties  
+- Create Event Notification  
+- Select **Object Created (PUT)**  
+- Set destination as Lambda function  
+
+### Step 6: Test the Project
+- Upload an image to S3 bucket  
+- Lambda automatically resizes image  
+- Resized image stored in output folder  
+
+---
+
+## 📂 Workflow
+
+```text
+Upload Image → S3 Bucket → Trigger Lambda → Resize Image → Save Resized Image
+
